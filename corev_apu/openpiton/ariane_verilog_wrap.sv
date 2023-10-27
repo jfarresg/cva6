@@ -15,6 +15,7 @@
 
 module ariane_verilog_wrap
     import ariane_pkg::*;
+    import config_pkg::*;
 #(
   parameter int unsigned               RASDepth              = 2,
   parameter int unsigned               BTBEntries            = 32,
@@ -156,32 +157,59 @@ module ariane_verilog_wrap
   // ariane instance
   /////////////////////////////
 
-  localparam ariane_pkg::ariane_cfg_t ArianeOpenPitonCfg = '{
-    RASDepth:              RASDepth,
-    BTBEntries:            BTBEntries,
-    BHTEntries:            BHTEntries,
-    // idempotent region
-    NrNonIdempotentRules:  NrNonIdempotentRules,
-    NonIdempotentAddrBase: NonIdempotentAddrBase,
-    NonIdempotentLength:   NonIdempotentLength,
-    NrExecuteRegionRules:  NrExecuteRegionRules,
-    ExecuteRegionAddrBase: ExecuteRegionAddrBase,
-    ExecuteRegionLength:   ExecuteRegionLength,
-    // cached region
-    NrCachedRegionRules:   NrCachedRegionRules,
-    CachedRegionAddrBase:  CachedRegionAddrBase,
-    CachedRegionLength:    CachedRegionLength,
-    // cache config
-    AxiCompliant:          1'b0,
-    SwapEndianess:         SwapEndianess,
-    // debug
-    DmBaseAddress:         DmBaseAddress,
-    NrPMPEntries:          NrPMPEntries
+  localparam cva6_cfg_t CVA6Cfg = '{
+    NrCommitPorts:          unsigned'(2),
+    AxiAddrWidth:           unsigned'(64),
+    AxiDataWidth:           unsigned'(64),
+    AxiIdWidth:             unsigned'(4),
+    AxiUserWidth:           unsigned'(1),
+    NrLoadBufEntries:       unsigned'(2),
+    FpuEn:                  bit'(1),
+    XF16:                   bit'(0),
+    XF16ALT:                bit'(0),
+    XF8:                    bit'(0),
+    RVA:                    bit'(1),
+    RVV:                    bit'(0),
+    RVC:                    bit'(1),
+    RVZCB:                  bit'(0),
+    XFVec:                  bit'(0),
+    CvxifEn:                bit'(0),
+    ZiCondExtEn:            bit'(0),
+    RVF:                    bit'(0),
+    RVD:                    bit'(0),
+    FpPresent:              bit'(0),
+    NSX:                    bit'(0),
+    FLen:                   unsigned'(0),
+    RVFVec:                 bit'(0),
+    XF16Vec:                bit'(0),
+    XF16ALTVec:             bit'(0),
+    XF8Vec:                 bit'(0),
+    NrRgprPorts:            unsigned'(0),
+    NrWbPorts:              unsigned'(0),
+    EnableAccelerator:      bit'(0),
+    HaltAddress:            64'h800,
+    ExceptionAddress:       64'h808,
+    RASDepth:               RASDepth,
+    BTBEntries:             BTBEntries,
+    BHTEntries:             BHTEntries,
+    DmBaseAddress:          DmBaseAddress,
+    NrPMPEntries:           NrPMPEntries,
+    NOCType:                NOC_TYPE_L15_BIG_ENDIAN,
+    NrNonIdempotentRules:   NrNonIdempotentRules,
+    NonIdempotentAddrBase:  NonIdempotentAddrBase,
+    NonIdempotentLength:    NonIdempotentLength,
+    NrExecuteRegionRules:   NrExecuteRegionRules,
+    ExecuteRegionAddrBase:  ExecuteRegionAddrBase,
+    ExecuteRegionLength:    ExecuteRegionLength,
+    NrCachedRegionRules:    NrCachedRegionRules,
+    CachedRegionAddrBase:   CachedRegionAddrBase,
+    CachedRegionLength:     CachedRegionLength,
+    MaxOutstandingStores:   unsigned'(0)
   };
 
   ariane #(
-    .ArianeCfg ( ArianeOpenPitonCfg ),
-    .noc_req_t  ( wt_cache_pkg::l15_req_t ),
+    .CVA6Cfg    ( CVA6Cfg                  ),
+    .noc_req_t  ( wt_cache_pkg::l15_req_t  ),
     .noc_resp_t ( wt_cache_pkg::l15_rtrn_t )
   ) ariane (
     .clk_i       ( clk_i      ),
