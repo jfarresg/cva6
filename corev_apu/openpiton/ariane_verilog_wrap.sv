@@ -51,12 +51,11 @@ module ariane_verilog_wrap
   parameter bit                        RVFVecEn              = 0,
   parameter bit                        XF16VecEn             = 0,
   parameter bit                        XF16ALTVecEn          = 0,
-  parameter bit                        XF16ALTVecEn          = 0,
   parameter bit                        XF8VecEn              = 0,
   // debug module base address
   parameter logic [63:0]               DmBaseAddress         = 64'h0,
   // swap endianess in l15 adapter
-  parameter bit                        NOCType               = NOC_TYPE_L15_BIG_ENDIAN,
+  parameter bit                        SwapEndianess         = 1,
   // AXI Configuration
   parameter int unsigned               AxiAddrWidth          = 64,
   parameter int unsigned               AxiDataWidth          = 64,
@@ -233,7 +232,7 @@ module ariane_verilog_wrap
     BHTEntries:             BHTEntries,
     DmBaseAddress:          DmBaseAddress,
     NrPMPEntries:           NrPMPEntries,
-    NOCType:                NOCType,
+    NOCType:                SwapEndianess ? NOC_TYPE_L15_BIG_ENDIAN : NOC_TYPE_AXI4_ATOP,
     NrNonIdempotentRules:   NrNonIdempotentRules,
     NonIdempotentAddrBase:  NonIdempotentAddrBase,
     NonIdempotentLength:    NonIdempotentLength,
