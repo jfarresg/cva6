@@ -19,6 +19,7 @@
 +incdir+common/local/util/
 +incdir+corev_apu/register_interface/include/
 
+core/include/config_pkg.sv
 core/include/cv64a6_imafdc_sv39_openpiton_config_pkg.sv
 core/include/riscv_pkg.sv
 corev_apu/riscv-dbg/src/dm_pkg.sv
@@ -89,7 +90,6 @@ core/serdiv.sv
 core/perf_counters.sv
 core/mmu_sv39/ptw.sv
 core/ariane_regfile_ff.sv
-core/re_name.sv
 core/scoreboard.sv
 core/store_buffer.sv
 core/amo_buffer.sv
@@ -108,7 +108,6 @@ core/cache_subsystem/wt_cache_subsystem.sv
 corev_apu/clint/clint.sv
 corev_apu/clint/axi_lite_interface.sv
 corev_apu/riscv-dbg/debug_rom/debug_rom.sv
-corev_apu/riscv-dbg/src/dm_pkg.sv
 corev_apu/riscv-dbg/src/dm_csrs.sv
 corev_apu/riscv-dbg/src/dm_mem.sv
 corev_apu/riscv-dbg/src/dm_top.sv
